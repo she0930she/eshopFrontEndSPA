@@ -7,8 +7,10 @@ import { JsonTest } from 'src/app/Shared/Models/jsonTest';
   providedIn: 'root'
 })
 export class ProductService {
-  private url = "https://jsonplaceholder.typicode.com/posts"
+  
+  private azGetAllProductsURL = "https://orderapp.jollyforest-496decb9.westus2.azurecontainerapps.io/api/Product/getAllProducts"
   private dockerGetAllProductsURL = "http://localhost:1551/api/Product/getAllProducts"
+  private url = "https://jsonplaceholder.typicode.com/posts"
   //private dockerloginURL = "http://localhost:1550/api/User/login"
 
   // type of "HttpClient"
@@ -18,8 +20,8 @@ export class ProductService {
 
 
   getAllProductLists(): Observable<any> {
-    console.log("dockerGetAllProductsURL: ", this.dockerGetAllProductsURL)
-    return this.httpClient.get(this.dockerGetAllProductsURL);
+    console.log("azGetAllProductsURL: ", this.azGetAllProductsURL)
+    return this.httpClient.get(this.azGetAllProductsURL);
   }
 
 

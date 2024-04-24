@@ -21,6 +21,8 @@ export class AccountService {
 
   // url
   private url = "https://customerapiapp.calmsea-bee3f815.westus2.azurecontainerapps.io/api/User/createNewUser"
+  private azRegisterURL = "https://customerapp.jollyforest-496decb9.westus2.azurecontainerapps.io/api/User/createNewUser"
+  private azLoginURL = "https://customerapp.jollyforest-496decb9.westus2.azurecontainerapps.io/api/User/login"
   private dockerRegisterURL = "http://localhost:1550/api/User/createNewUser"
   private dockerloginURL = "http://localhost:1550/api/User/login"
   private testCORSUrl = "http://example.com"
@@ -33,7 +35,7 @@ export class AccountService {
   ) { }
 
   verifyLogin(loginData: Login){ // Login data type
-    return this.httpClient.post<LoginResponse>(this.dockerloginURL, loginData)
+    return this.httpClient.post<LoginResponse>(this.azLoginURL, loginData)
     
   }
 
@@ -45,9 +47,9 @@ export class AccountService {
 
   createUser(registerData: Register): Observable<boolean>{
     let headers = new HttpHeaders()
-    console.log("dockerRegisterURL link: ", this.dockerRegisterURL)
+    console.log("azRegisterURL link: ", this.azRegisterURL)
      // TODO: add header
-    return this.httpClient.post<boolean>(this.dockerRegisterURL, registerData)
+    return this.httpClient.post<boolean>(this.azRegisterURL, registerData)
   }
 
   populateUserInfoFromToken(loginResponse: LoginResponse){
