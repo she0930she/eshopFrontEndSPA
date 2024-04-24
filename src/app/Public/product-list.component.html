@@ -1,0 +1,36 @@
+<p>Here is our list of products</p>
+
+
+
+<div class="card-container d-flex" >
+    <div *ngFor="let product of productsList">
+        <div class="card" style="width: 18rem;">
+            <img src="{{product.pictureUrl}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{product.productName}}</h5>
+                <p class="card-text">Price: {{product.unitPrice}}</p>
+                <a (click)="addToCart(product)" href="#" class="btn btn-primary">Add to Cart</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+  
+<!-- 
+<div *ngFor="let product of productsList">
+    <p>Id: {{product.Id}}</p>
+    <p>Name: {{product.Name}}</p>    2 way data binding {{}}    
+</div>
+<div *ngIf="productsList.length< 4">
+    <p>lenth more than 10</p>
+</div>
+
+<input type="text"  [(ngModel)]="productsList[1].Name"/> 
+  banana in the box notation [(ngModel)]
+
+<div *ngFor="let item of mockJsonTestObj">
+    <p>Id: {{item.id}}</p>
+    <p>Title: {{item.title}}</p>
+    <p>Body: {{item.body}}</p>
+</div>
+-->

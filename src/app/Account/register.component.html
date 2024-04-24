@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-sm-3"></div> 
+        <div class="col-sm-6">
+            <div class="card"> <!-- class="card"-->
+                <div class="alert alert-primary" role="alert" *ngIf="isSubmitted">
+                    You have registed successfully!
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="failedSubmit">
+                    Register Failed! Please register again.
+                </div>
+                <div class="card-body">
+                <h4 class="card-title">Register Form</h4>
+                <!-- <div class="d-flex justify-content-center"> -->
+                    <!-- 
+                        create a local variable call "loginForm" using #loginForm 
+                        loginForm is an ngForm
+                        add eventListener (submit)
+                    -->
+                    <!-- <form #loginForm="ngForm" (submit)="createUser()"> -->
+                    <form [formGroup]="registerForm" (ngSubmit)="createUser()" > <!-- bind formGroup with registerForm-->
+                        <div class="form-group mb-3">
+                            <label for="registerEmail" class="form-label">Full Name</label>
+                            <input type="email" formControlName="name"  class="form-control" id="registerName"
+                                aria-describedby="nameRegisterHelp" required /> 
+                            <div id="nameRegisterHelp" class="text-danger"
+                                *ngIf="(RegisterFormControl['name'].touched || isSubmitted) && 
+                                (RegisterFormControl['name'].errors?.['required'])"
+                            >Full Name is required.</div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="registerEmail" class="form-label">Email address</label>
+                            <input type="email" formControlName="email"  class="form-control" id="registerEmail"
+                                aria-describedby="emailHelp" required /> 
+                            <div id="emailHelp" class="text-danger"
+                            *ngIf="(RegisterFormControl['email'].touched || isSubmitted) && 
+                                (RegisterFormControl['email'].errors?.['required'])"
+                            >email is required.</div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" formControlName="password"  class="form-control" id="registerPassword"
+                                aria-describedby="passwordHelp" required /> 
+                            <div id="passwordHelp" class="text-danger"
+                            *ngIf="(RegisterFormControl['password'].touched || isSubmitted) && 
+                                (RegisterFormControl['password'].errors?.['required'])"
+                            >password is required.</div>
+                        </div>
+                        <button type="submit" [disabled]="!registerForm.valid" class="form-group btn btn-primary mb-3" 
+                            value="registerSubmit" 
+                        >Register</button>
+                    </form>
+                </div>
+                <!-- </div> -->
+            </div>
+        </div>
+        <div class="col-sm-3"></div> <!--  assign space -->
+    </div>
+</div>
