@@ -1,5 +1,5 @@
 export interface Product {
-    Id: number,
+    id: number,
     productName: string,
     unitPrice: number,
     stockQuantity: number,
@@ -7,8 +7,8 @@ export interface Product {
     description: string,
 }
 
-export interface cartItem {
-    Id: number,
+export interface CartItem {
+    id: number,
     productName: string,
     unitPrice: number,
     stockQuantity: number,

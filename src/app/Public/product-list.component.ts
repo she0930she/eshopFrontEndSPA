@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { Product } from '../Shared/Models/Product';
+import { CartItem, Product } from '../Shared/Models/Product';
 import { ProductService } from '../Core/Services/product.service';
-import { JsonTest } from '../Shared/Models/jsonTest';
 import { Title } from '@angular/platform-browser';
+import { CartService } from '../Core/Services/cart.service';
 
 @Component({
   selector: 'app-product-list',
@@ -12,38 +12,72 @@ import { Title } from '@angular/platform-browser';
 
 export class ProductListComponent {
 
-  constructor(private productService: ProductService){}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService,
+  ){}
 
-  productsList: Product[] = [];
-  mockJsonTestObj: any;
-  product: Product ={
-    Id : 0,
-    productName : "",
-    unitPrice : 0,
-    stockQuantity : 0,
-    pictureUrl : "",
-    description: ""
-  }
-  public shoppingCartProducts: Product[] = [];
+  productDisplay: Product[] = [];
+  itemList: CartItem[] = []
+  //grandTotal !: number ; //
+
+  //public shoppingCartProducts: Product[] = [];
 
 
   // angular lifecycle hooks
 
   ngOnInit(): void {
     this.getAllProducts();
-  //  for (let i = 0; i< 5; i++){
-  //   this.productsList.push({Id: i, Name:"Example"})
+    this.cartService.cartObserve.subscribe( res =>{
+      this.itemList = res;
+    })
    }
 
   addToCart(product: Product){
-    this.shoppingCartProducts.push(product);
-    console.log("shoppingCartProducts: ", this.shoppingCartProducts)
+  var cartItem : CartItem ={
+    id : 0,
+    productName : "",
+    unitPrice : 0,
+    stockQuantity : 0,
+    quantity: 0,
+    pictureUrl : "",
+    description: "",
+    total: 0,
   }
-  deleteFromCart(product: Product){
-    this.shoppingCartProducts = this.shoppingCartProducts.filter(
-      i => i.Id !== product.Id
-    )
+    // product in cart
+    if (this.cartService.isProductInCart(product)){ 
+      //increment qty
+      this.cartService.updateProductWithQty(product, 1)
+      // this.cartService.cartList.subscribe( item => {
+      //   console.log("cartList service item 11: ", item)
+      // })
+      return
+    }
+    // product not in cart
+    this.assignProductToCartItem(product, cartItem)
+
+    this.cartService.addToCart(cartItem)
+    this.cartService.cartObserve.subscribe( item => {
+      console.log("proList-cartList service item: ", item)
+    })
+
   }
+
+  assignProductToCartItem(product: Product, cartItem: CartItem){
+    cartItem.id = product.id
+    cartItem.productName = product.productName
+    cartItem.unitPrice = product.unitPrice
+    cartItem.stockQuantity = product.stockQuantity
+    cartItem.quantity = 1
+    cartItem.pictureUrl = product.pictureUrl
+    cartItem.description = product.description
+    cartItem.total = cartItem.unitPrice * cartItem.quantity
+  }
+  // deleteFromCart(product: Product){
+  //   this.shoppingCartProducts = this.shoppingCartProducts.filter(
+  //     i => i.Id !== product.Id
+  //   )
+  // }
 
   viewShoppingCart(){
     
@@ -53,25 +87,10 @@ export class ProductListComponent {
     this.productService.getAllProductLists().subscribe(
       dataList => {
         console.log("dataList", dataList)
-        this.productsList = dataList
-        console.log("productsList", this.productsList)
+        this.productDisplay = dataList
+        console.log("productDisplay", this.productDisplay)
       })
       
   }
-
-
-
-
-
-     // get JSONTest mock
-  // this.productService.getJsonTestPosts().subscribe(
-  //   (data) => {this.mockJsonTestObj = data;
-  //     //console.log(this.mockJsonTestObj)
-  //     //console.log(data);
-  //   },
-  //   (error) => { console.log(error); }
-  // )}
-
-
 
 }

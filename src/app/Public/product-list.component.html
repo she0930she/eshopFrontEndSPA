@@ -3,7 +3,7 @@
 
 
 <div class="card-container d-flex" >
-    <div *ngFor="let product of productsList">
+    <div *ngFor="let product of productDisplay">
         <div class="card" style="width: 18rem;">
             <img src="{{product.pictureUrl}}" class="card-img-top" alt="...">
             <div class="card-body">
@@ -15,7 +15,7 @@
 
     </div>
 </div>
-  
+
 <!-- 
 <div *ngFor="let product of productsList">
     <p>Id: {{product.Id}}</p>

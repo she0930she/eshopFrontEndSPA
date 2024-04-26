@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ProductService } from '../Core/Services/product.service';
 import { ProductListComponent } from './product-list.component';
-import { Product, cartItem } from '../Shared/Models/Product';
+import { CartItem, Product } from '../Shared/Models/Product';
+import { CartService } from '../Core/Services/cart.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -11,20 +12,31 @@ import { Product, cartItem } from '../Shared/Models/Product';
 export class ShoppingCartComponent {
 
   constructor(
-    private productService: ProductService,
-    // private productListComponent: ProductListComponent,
+    private cartService: CartService,
   ){}
 
-  productList: Product[]=[];
-  cartItemList: cartItem[] = [];
-  grandTotal: number = 0;
+  cartItemList: CartItem[] = [];
+  grandTotal !: number;
 
   ngOnInit(){
-    //this.productListComponent
+    this.cartService.cartObserve.subscribe( item =>{
+      this.grandTotal = this.cartService.getTotalPrice()
+      this.cartItemList = item
+      console.log("shopping service item: ", item)
+    })
   }
 
-  removeItem(item: cartItem){}
+  viewShoppingCart(){
+    this.cartService.cartObserve.subscribe( item => {
+      console.log("shopping service item: ", item)
+    })
+  }
+
+  removeItem(item: CartItem){}
 
   emptycart(){}
 
+  checkOut(){
+    alert("you have successfully placed an order." );
+  }
 }
