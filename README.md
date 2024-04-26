@@ -39,6 +39,11 @@ Docker command to first upload to Azure Static App:
 - $ docker push [myregistry].azurecr.io/[imagename]:latest
 
 
+How to run dev mode
+- $ ng serve
+
+How to deploy as Static App
+- $ ng build
 
 
 # Eshop
