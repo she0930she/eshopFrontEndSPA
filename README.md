@@ -1,3 +1,46 @@
+This is the design for **Microservices Pattern**
+  - Backend:
+    - OrderService: c# .Net Core
+    - CustomerEShop: c# .Net Core
+  - Frontend:
+    - eShopFrontEndSPA: Angular 16 
+
+
+**Eshop** provides: 
+ 1. register form
+ 1. login form
+ 1. products display
+ 1. order plcement UI
+ 1. login token saved in localStorage
+
+**Technology** I used:
+ - Angular 16, reactive form, service resource, angualr guards
+ - deployed on Azure Static App 
+
+How to first update Frontend source code:
+1. use Azure CICD
+1. update yml file
+
+How to connect 2 components in angular:
+- shoppingCartList as the example
+  1. create a cartService
+  1. dependency injection in componentA constructor
+  1. dependency injection in componentB constructor
+  1. subscribe all necessary (variables) cartList or grandTotal changes in componentA and B
+
+
+Docker command to first upload to Azure Static App: 
+- **TURN OFF** dev mode
+- $ docker build -t feb2024acr.azurecr.io/productapi:latest -f ./Product.API/Dockerfile . --platform linux/amd64 
+- $ az login
+- $ az acr login --name [myregistry.azurecr.io]
+- $ turn on Azure container registry admin access
+- $ docker login [myregistry.azurecr.io]
+- $ docker push [myregistry].azurecr.io/[imagename]:latest
+
+
+
+
 # Eshop
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
